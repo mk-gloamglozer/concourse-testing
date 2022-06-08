@@ -1,15 +1,31 @@
+resource_types:
+  - name: git-branches
+    type: registry-image
+    source:
+      repository: aoldershaw/git-branches-resource
+
 resources:
   - name: repo
     type: git
     source:
       uri: https://github.com/mk-gloamglozer/concourse-testing.git
+
+  - name: feature-branches
+    type: git-branches
+    source:
+      uri: https://github.com/mk-gloamglozer/concourse-testing.git
+      branch_regex: "feature/(?P<feature>.*)"
+
 jobs:
   - name: "set-multiple-pipelines"
     plan:
       - get: repo
+      - get: feature-branches
+      - load_var: branches
+        file: feature-branches/branches.json
       - across:
           - var: item
-            values: ["a", "b", "c"]
+            values: ((.:branches))
         set_pipeline: dev
         file: repo/pipeline/template.yml
         instance_vars:
