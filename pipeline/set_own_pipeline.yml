@@ -13,8 +13,6 @@ jobs:
     plan:
       - get: repo
       - get: busybox
-      - load_var: branches
-        file: feature-branches/branches.json
       - set_pipeline: self
         file: repo/pipeline/set_own_pipeline.yml
       - task: echo-readme
@@ -24,9 +22,6 @@ jobs:
           inputs:
             - name: repo
           run:
-            path: sh
+            path: echo
             args:
-              - -cx
-              - |
-                cd repo
-                cat README.md
+              - hi there bud

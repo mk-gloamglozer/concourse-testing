@@ -31,4 +31,18 @@ the trouble with this is that pipelines that should trigger because of inputs ot
 
 ## how to stop pipeline running before pipeline is updated
 
-can manually trigger pipeline using the fly resource. https://github.com/troykinsella/concourse-fly-resource
+can manually trigger created pipeline using the fly resource. https://github.com/troykinsella/concourse-fly-resource
+
+could push back to <branch>/concourse and have the child pipeline listen for changes to that branch - bit convoluted.
+
+using set_pipeline self does not update the pipeline before running. i.e. the pipeline will run using the old config and then be updated.
+
+## OVERVIEW
+
+Difficult to see how pipeline could be managed without a lot of manual work. With circle whatever is in the config file for that commit is used. With concourse the pipeline needs to be configured separately either by a separate pipeline or manually using the fly cli. If it is managed by a separate pipeline however the question arises how do we trigger the managed pipeline? If it is triggered by a git commit then it will run at the same time as the job that updates the pipeline, therefore the pipeline config will only take effect on the commit after the pipeline is updated.
+
+### mitigation strategies
+
+the management pipeline could trigger the child pipeline to run if it needs to be updated.
+
+# conditional jobs (e.g. publish only if test succeeds)
