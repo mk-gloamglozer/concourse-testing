@@ -24,9 +24,9 @@ jobs:
       - load_var: branches
         file: feature-branches/branches.json
       - across:
-          - var: item
+          - var: branch
             values: ((.:branches))
         set_pipeline: dev
         file: repo/pipeline/template.yml
         instance_vars:
-          item: ((.:item))
+          item: ((.:branch.name))
