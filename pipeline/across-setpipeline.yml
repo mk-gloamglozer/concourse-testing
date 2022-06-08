@@ -12,3 +12,5 @@ jobs:
             values: ["a", "b", "c"]
         set_pipeline: dev
         file: repo/pipeline/template.yml
+        instance_vars:
+          item: ((.:item))
