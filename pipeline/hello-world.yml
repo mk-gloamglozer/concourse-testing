@@ -1,13 +1,13 @@
-#git resource
-# resources:
-#   - name: repo
-#     type: git
-#     source:
-#       uri: https://github.com/mk-gloamglozer/concourse-testing
+# git resource
+resources:
+  - name: repo
+    type: git
+    source:
+      uri: https://github.com/mk-gloamglozer/concourse-testing.git
 jobs:
   - name: hello-world-job
     plan:
-      # - get: repo
+      - get: repo
       - task: npm-install
         config:
           platform: linux
@@ -16,7 +16,12 @@ jobs:
             source:
               repository: node
               tag: gallium-alpine
+          inputs:
+            - name: repo
           run:
-            path: node
+            path: sh
             args:
-              - --version
+              - -cx
+              - |
+                cd repo
+                npm install
