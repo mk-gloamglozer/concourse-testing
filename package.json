@@ -1,0 +1,22 @@
+{
+  "name": "concourse",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mk-gloamglozer/concourse-testing.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mk-gloamglozer/concourse-testing/issues"
+  },
+  "homepage": "https://github.com/mk-gloamglozer/concourse-testing#readme",
+  "dependencies": {
+    "lerna": "^5.1.0"
+  }
+}
