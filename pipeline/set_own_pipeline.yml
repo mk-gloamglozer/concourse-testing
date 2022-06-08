@@ -1,0 +1,32 @@
+resources:
+  - name: repo
+    type: git
+    source:
+      uri: https://github.com/mk-gloamglozer/concourse-testing.git
+  - name: busybox
+    type: registry-image
+    source:
+      repository: busybox
+
+jobs:
+  - name: "reset"
+    plan:
+      - get: repo
+      - get: busybox
+      - load_var: branches
+        file: feature-branches/branches.json
+      - set_pipeline: self
+        file: repo/pipeline/set_own_pipeline.yml
+      - task: echo-readme
+        image: busybox
+        config:
+          platform: linux
+          inputs:
+            - name: repo
+          run:
+            path: sh
+            args:
+              - -cx
+              - |
+                cd repo
+                cat README.md
