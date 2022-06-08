@@ -4,18 +4,20 @@ resources:
     type: git
     source:
       uri: https://github.com/mk-gloamglozer/concourse-testing.git
+  - name: node_image
+    type: registry-image
+    source:
+      repository: node
+      tag: gallium-alpine
 jobs:
   - name: hello-world-job
     plan:
       - get: repo
+      - get: node_image
       - task: npm-install
+        image: node_image
         config:
           platform: linux
-          image_resource:
-            type: registry-image
-            source:
-              repository: node
-              tag: gallium-alpine
           inputs:
             - name: repo
           run:
@@ -24,4 +26,5 @@ jobs:
               - -cx
               - |
                 cd repo
+                ls -la
                 npm install
