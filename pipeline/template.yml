@@ -1,0 +1,16 @@
+resources:
+  - name: busybox
+    type: registry-image
+    source:
+      repository: busybox
+jobs:
+  - name: test
+    plan:
+      - task: hello
+        image: busybox
+        config:
+          platform: linux
+          run:
+            path: echo
+            args:
+              - "hello world"

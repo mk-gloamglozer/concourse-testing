@@ -1,0 +1,14 @@
+resources:
+  - name: repo
+    type: git
+    source:
+      uri: https://github.com/mk-gloamglozer/concourse-testing.git
+jobs:
+  - name: "set-multiple-pipelines"
+    plan:
+      - get: repo
+      - across:
+          - var: item
+            values: ["a", "b", "c"]
+        set_pipeline: dev
+        file: repo/pipeline/template.yml
