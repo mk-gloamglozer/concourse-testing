@@ -6,6 +6,7 @@ resources:
 jobs:
   - name: test
     plan:
+      - get: busybox
       - task: hello
         image: busybox
         config:
