@@ -3,15 +3,29 @@ resources:
     type: registry-image
     source:
       repository: busybox
+
+  - name: repo
+    type: git
+    source:
+      uri: https://github.com/mk-gloamglozer/concourse-testing.git
+      branch: ((branch))
+
 jobs:
   - name: test
     plan:
       - get: busybox
+      - get: repo
+        trigger: true
       - task: hello
         image: busybox
         config:
           platform: linux
+          inputs:
+            - name: repo
           run:
-            path: echo
+            path: sh
             args:
-              - "hello world ((item))"
+              - -cx
+              - |
+                cd repo
+                cat README.md
