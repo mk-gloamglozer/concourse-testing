@@ -1,0 +1,22 @@
+#git resource
+# resources:
+#   - name: repo
+#     type: git
+#     source:
+#       uri: https://github.com/mk-gloamglozer/concourse-testing
+jobs:
+  - name: hello-world-job
+    plan:
+      # - get: repo
+      - task: npm-install
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source:
+              repository: node
+              tag: gallium-alpine
+          run:
+            path: node
+            args:
+              - --version
