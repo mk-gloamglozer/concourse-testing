@@ -26,7 +26,7 @@ jobs:
       - across:
           - var: branch
             values: ((.:branches))
-        set_pipeline: dev
+        set_pipeline: ((.:branch.name))
         file: repo/pipeline/template.yml
-        instance_vars:
-          branch: ((.:branch.name))
+        # instance_vars:
+        #   branch: ((.:branch.name))
