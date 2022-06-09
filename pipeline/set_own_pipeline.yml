@@ -12,6 +12,7 @@ jobs:
   - name: "reset"
     plan:
       - get: repo
+        trigger: true
       - get: busybox
       - set_pipeline: self
         file: repo/pipeline/set_own_pipeline.yml
@@ -25,3 +26,19 @@ jobs:
             path: echo
             args:
               - hi there bud
+  - name: print-testfile
+    plan:
+      - get: repo
+        trigger: true
+        passed: [reset]
+      - get: busybox
+      - task: echo-testfile
+        image: busybox
+        config:
+          platform: linux
+          inputs:
+            - name: repo
+          run:
+            path: cat
+            args:
+              - repo/testfile
